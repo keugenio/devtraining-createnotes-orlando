@@ -4,21 +4,17 @@
         <client_script><![CDATA[function($rootScope,$scope) {
   /* widget controller */
   var c = this;
+	var currIndex;
 	c.selectItem = function(idx) {
 		var id = c.data.notes[idx].sys_id;
+		currIndex=idx
 		console.log('Note index: ' + idx);
 		$rootScope.noteID = id;
 		$rootScope.$emit('selectNote', id);
 	}	
-		$rootScope.$on('selectNote', function(event,data) {
-		c.server.get({
-			action: 'getNote',
-			noteID: $rootScope.noteID
-		}).then(function(r) {
-			c.data.title = r.data.note.title;
-			c.data.note = r.data.note.note;
-			c.data.noteID = r.data.note.sys_id;
-		});
+		$rootScope.$on('updateNote', function(event,r) {
+		c.data.notes[currIndex].note = r.note.slice(0,20);
+		c.data.notes[currIndex].title = r.title;
 	});
 	
 }]]></client_script>
@@ -59,14 +55,14 @@
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2020-08-10 18:35:00</sys_created_on>
         <sys_id>29f1ba21db621010da6e2bfa4b961959</sys_id>
-        <sys_mod_count>9</sys_mod_count>
+        <sys_mod_count>21</sys_mod_count>
         <sys_name>Notes List</sys_name>
         <sys_package display_value="CreateNotes" source="x_snc_createnotes">df5fd9a5090232007f44e1046c8ff69f</sys_package>
         <sys_policy/>
         <sys_scope display_value="CreateNotes">df5fd9a5090232007f44e1046c8ff69f</sys_scope>
         <sys_update_name>sp_widget_29f1ba21db621010da6e2bfa4b961959</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2020-08-10 23:59:22</sys_updated_on>
+        <sys_updated_on>2020-08-11 02:24:26</sys_updated_on>
         <template><![CDATA[<div class="panel panel-default">
   <div class="panel-heading clearfix">
     <h3 class="panel-title pull-left">
